@@ -20,7 +20,7 @@ pipeline {
       //jenkins credential id to authenticate to Nexus OSS
       NEXUS_CREDENTIAL_ID = "nexus_token"
     }
-    // stages {
+    stages {
     //   stage('SCM') {
     //     steps {
     //       svn 'http://192.168.80.24/svn/devops_project/'
