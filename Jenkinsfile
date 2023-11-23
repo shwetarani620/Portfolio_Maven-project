@@ -72,17 +72,17 @@ pipeline {
           }
         }
       }
-      stage ('Static analysis') {
-        steps {
-          echo '=========== SonarQube analysis ============'
-          withSonarQubeEnv('sonarqube') {
-	  sh 'mvn sonar:sonar'
-          // sh '''$SCANNER_HOME/bin/sonarqube -Dsonar.projectName=hello_world_pipeline \
-          // -Dsonar.java.binaries=. \
-          // -Dsonar.projectKey=sonarkey '''
-          }
-        }
-      }
+   //    stage ('Static analysis') {
+   //      steps {
+   //        echo '=========== SonarQube analysis ============'
+   //        withSonarQubeEnv('sonarqube') {
+	  // sh 'mvn sonar:sonar'
+   //        // sh '''$SCANNER_HOME/bin/sonarqube -Dsonar.projectName=hello_world_pipeline \
+   //        // -Dsonar.java.binaries=. \
+   //        // -Dsonar.projectKey=sonarkey '''
+   //        }
+   //      }
+   //    }
       // stage('SonarQube Analysis') {
       //   steps{  // def mvn = tool 'Default Maven';
       //     withSonarQubeEnv('SonarQube-Scanner') {
