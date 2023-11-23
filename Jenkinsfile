@@ -20,13 +20,13 @@ pipeline {
       //jenkins credential id to authenticate to Nexus OSS
       NEXUS_CREDENTIAL_ID = "nexus_token"
     }
-    stages {
-      stage('SCM') {
-        steps {
-          svn 'http://192.168.80.24/svn/devops_project/'
-          credentialsId: 'svn_key'
-        }
-      }
+    // stages {
+    //   stage('SCM') {
+    //     steps {
+    //       svn 'http://192.168.80.24/svn/devops_project/'
+    //       credentialsId: 'svn_key'
+    //     }
+    //   }
       stage ('Initialize') {
         steps {
           echo '============================== PATH INITIALIZED =============================='
@@ -76,19 +76,20 @@ pipeline {
         steps {
           echo '=========== SonarQube analysis ============'
           withSonarQubeEnv('sonarqube') {
-          sh '''$SCANNER_HOME/bin/sonarqube -Dsonar.projectName=hello_world_pipeline \
-          -Dsonar.java.binaries=. \
-          -Dsonar.projectKey=sonarkey '''
+	  sh 'mvn sonar:sonar'
+          // sh '''$SCANNER_HOME/bin/sonarqube -Dsonar.projectName=hello_world_pipeline \
+          // -Dsonar.java.binaries=. \
+          // -Dsonar.projectKey=sonarkey '''
           }
         }
       }
-      stage('SonarQube Analysis') {
-        steps{  // def mvn = tool 'Default Maven';
-          withSonarQubeEnv('SonarQube-Scanner') {
-            sh "${mvn}/bin/mvn clean verify sonar:sonar -Dsonar.projectKey=hello_world_pipeline -Dsonar.projectName='hello_world_pipeline'"
-          }
-        }
-      }
+      // stage('SonarQube Analysis') {
+      //   steps{  // def mvn = tool 'Default Maven';
+      //     withSonarQubeEnv('SonarQube-Scanner') {
+      //       sh "${mvn}/bin/mvn clean verify sonar:sonar -Dsonar.projectKey=hello_world_pipeline -Dsonar.projectName='hello_world_pipeline'"
+      //     }
+      //   }
+      // }
       stage('Generate and compile') {
         steps {
           echo '============================== SOFTWARE COMPILE =============================='
