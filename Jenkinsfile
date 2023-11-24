@@ -39,7 +39,7 @@ pipeline {
       stage ('Check secrets') {
         steps {
           echo '================================ CHECK SECRET ================================='
-          sh 'trufflehog3 http://192.168.80.24/svn/devops_project/ -f json -o truffelhog_output.json || true'
+          sh 'trufflehog3 https://github.com/chaudharysurya14/CICD_Portfolio_maven_project.git -f json -o truffelhog_output.json || true'
         }
        }
       stage ('Software Composition Analysis') {
