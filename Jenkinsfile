@@ -52,10 +52,7 @@ pipeline {
                  dependencyCheckPublisher pattern: 'dependency-check-report.xml'
              }
         }
-       environment{
-     SONARSCANNER = 'sonar'
-     SONARHOME = 'sonarqube'
-  }
+      
    //      steps {
 		 // echo '============================== Static Analysis =============================='
    //        withSonarQubeEnv('sonar') {
