@@ -57,6 +57,7 @@ pipeline {
           scannerHome = tool "${SONAR_SCANNER}"
         }
         steps {
+		 echo '============================== Static Analysis =============================='
           withSonarQubeEnv('sonar') {
           // sh 'mvn clean sonar:sonar -Dsonar.javabinaries=src -Dsonar.projectName=sonarkey -Dsonar.jacoco.reportsPath=target/jacoco.exec' 
           sh '''${scannerHome}/bin/sonar-scanner -Dsonar.projectKey=shweta\
