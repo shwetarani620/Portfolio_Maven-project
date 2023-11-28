@@ -52,32 +52,32 @@ pipeline {
                  dependencyCheckPublisher pattern: 'dependency-check-report.xml'
              }
         }
-      // stage('SonarQube analysis') {
-      //   environment {
-      //     scannerHome = tool "${SONAR_SCANNER}"
-      //   }
-      //   steps {
-      //     echo '============================== SONARQUBE SCANNER =============================='
-      //     withSonarQubeEnv('sonar') {
-      //     // sh 'mvn clean sonar:sonar -Dsonar.javabinaries=src -Dsonar.projectName=sonarkey -Dsonar.jacoco.reportsPath=target/jacoco.exec' 
-      //     sh '''${scannerHome}/bin/sonar-scanner -Dsonar.projectKey=shweta\
-      //     -Dsonar.projectName=key \
-      //     -Dsonar.projectVersion=1.0 \
-      //     -Dsonar.sources=webapp/ \
-      //     -Dsonar.java.binaries=target/test-classes/com/visualpathit/account/controllerTest/ \
-      //     -Dsonar.junit.reportsPath=targetsurefire-reports/ \
-      //     -Dsonar.jacoco.reportsPath=target/site/jacoco/jacoco.xml/ \
-      //     -Dsonar.java.checkstyle.reportPaths=target/checkstyle-result.xml'''
-      //     }
-      //   }
-  stage ('Static Analysis') {
-            steps {
-               withSonarQubeEnv('sonar') {
-                 // sh 'mvn sonar:sonar'
-                sh 'mvn clean sonar:sonar -Dsonar.java.binaries=src'
-             }
-	  }
-	}
+      stage('SonarQube analysis') {
+        environment {
+          scannerHome = tool "${SONAR_SCANNER}"
+        }
+        steps {
+          echo '============================== SONARQUBE SCANNER =============================='
+          withSonarQubeEnv('sonar') {
+          // sh 'mvn clean sonar:sonar -Dsonar.javabinaries=src -Dsonar.projectName=sonarkey -Dsonar.jacoco.reportsPath=target/jacoco.exec' 
+          sh '''${scannerHome}/bin/sonar-scanner -Dsonar.projectKey=shweta\
+          -Dsonar.projectName=key \
+          -Dsonar.projectVersion=1.0 \
+          -Dsonar.sources=webapp/ \
+          -Dsonar.java.binaries=target/test-classes/com/visualpathit/account/controllerTest/ \
+          -Dsonar.junit.reportsPath=targetsurefire-reports/ \
+          -Dsonar.jacoco.reportsPath=target/site/jacoco/jacoco.xml/ \
+          -Dsonar.java.checkstyle.reportPaths=target/checkstyle-result.xml'''
+          }
+        }
+ //  stage ('Static Analysis') {
+ //            steps {
+ //               withSonarQubeEnv('sonar') {
+ //                 // sh 'mvn sonar:sonar'
+ //                sh 'mvn clean sonar:sonar -Dsonar.java.binaries=src'
+ //             }
+	//   }
+	// }
      stage('Generate and compile') {
         steps {
           echo '============================== SOFTWARE COMPILE =============================='
