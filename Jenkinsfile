@@ -76,7 +76,8 @@ pipeline {
                  // sh 'mvn sonar:sonar'
                 sh 'mvn clean sonar:sonar -Dsonar.java.binaries=src'
              }
-          }
+	  }
+	}
      stage('Generate and compile') {
         steps {
           echo '============================== SOFTWARE COMPILE =============================='
