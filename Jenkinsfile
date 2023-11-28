@@ -70,26 +70,14 @@ pipeline {
       //     -Dsonar.java.checkstyle.reportPaths=target/checkstyle-result.xml'''
       //     }
       //   }
-      // }
-   //    stage ('Static analysis') {
-   //      steps {
-   //        echo '=========== SonarQube analysis ============'
-   //        withSonarQubeEnv('sonarqube') {
-	  // sh 'mvn sonar:sonar'
-   //        // sh '''$SCANNER_HOME/bin/sonarqube -Dsonar.projectName=hello_world_pipeline \
-   //        // -Dsonar.java.binaries=. \
-   //        // -Dsonar.projectKey=sonarkey '''
-   //        }
-   //      }
-   //    }
-      // stage('SonarQube Analysis') {
-      //   steps{  // def mvn = tool 'Default Maven';
-      //     withSonarQubeEnv('SonarQube-Scanner') {
-      //       sh "${mvn}/bin/mvn clean verify sonar:sonar -Dsonar.projectKey=hello_world_pipeline -Dsonar.projectName='hello_world_pipeline'"
-      //     }
-      //   }
-      // }
-      stage('Generate and compile') {
+  stage ('Static Analysis') {
+            steps {
+               withSonarQubeEnv('sonar') {
+                 // sh 'mvn sonar:sonar'
+                sh 'mvn clean sonar:sonar -Dsonar.java.binaries=src'
+             }
+          }
+     stage('Generate and compile') {
         steps {
           echo '============================== SOFTWARE COMPILE =============================='
           sh "mvn compile"
@@ -113,27 +101,7 @@ pipeline {
           sh 'mvn clean install'
         }
       }
-      // stage("publish to nexus") {
-      //   steps {
-      //     echo '============================== UPLOADING ARTIFACTS TO NEXUS =============================='
-      //     nexusArtifactUploader artifacts: [
-      //       [
-      //         artifactId: 'maven-project', 
-      //         classifier: '', 
-      //         file: 'webapp/target/webapp.war', 
-      //         type: 'war'
-      //       ]
-      //     ], 
-      //     credentialsId: 'nexuscredential', 
-      //     groupId: 'com.example.maven-project', 
-      //     nexusUrl: '192.168.80.26:8081', 
-      //     nexusVersion: 'nexus3', 
-      //     protocol: 'http', 
-      //     repository: 'Devopsproject', 
-      //     version: '1.0-SNAPSHOT'
-      //   }
-      // }
-      // stage ('Fetch Application server') {
+     // stage ('Fetch Application server') {
       //   steps {
       //     echo '============================== FETCH APPLICATION SERVER =============================='
       //     sshagent(['application_server']) {
