@@ -27,32 +27,31 @@ pipeline {
     // //       credentialsId: 'svn_key'
     // //     }
     // //   }
-      stage ('Initialize') {
-        steps {
-          echo '============================== PATH INITIALIZED =============================='
-          sh '''
-                  echo "PATH = ${PATH}"
-                  echo "M2_HOME = ${M2_HOME}"
-              ''' 
-        }
+       stages {
+    stage ('Initialize') {
+      steps {
+        sh '''
+                echo "PATH = ${PATH}"
+                echo "M2_HOME = ${M2_HOME}"
+            ''' 
       }
-      stage ('Check secrets') {
-        steps {
-          echo '================================ CHECK SECRET ================================='
-          sh 'trufflehog3 https://github.com/shwetarani620/Portfolio_Maven-project.git -f json -o truffelhog_output.json || true'
-        }
+    }
+      stage ('Check Secrets') {
+       steps {
+       sh 'trufflehog3 https://github.com/shwetarani620/Devops_project.git -f json -o truffelhog_output.json || true'
        }
+     }
       stage ('Software Composition Analysis') {
-        steps {
-          echo '============================== DEPENDENCY CHECK =============================='
-          dependencyCheck additionalArguments: ''' 
-              -o "./" 
-              -s "./"
-              -f "ALL" 
-              --prettyPrint''', odcInstallation: 'Owasp-DC'
-          dependencyCheckPublisher pattern: 'dependency-check-report.xml'
+             steps {
+                 dependencyCheck additionalArguments: ''' 
+                     -o "./" 
+                     -s "./"
+                     -f "ALL" 
+                     --prettyPrint''', odcInstallation: 'owasp-dc'
+
+                 dependencyCheckPublisher pattern: 'dependency-check-report.xml'
+             }
         }
-      }
       stage('SonarQube analysis') {
         environment {
           scannerHome = tool "${SONAR_SCANNER}"
