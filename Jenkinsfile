@@ -58,10 +58,10 @@ pipeline {
       //   }
       //   steps {
       //     echo '============================== SONARQUBE SCANNER =============================='
-      //     withSonarQubeEnv('sonarqube') {
+      //     withSonarQubeEnv('sonar') {
       //     // sh 'mvn clean sonar:sonar -Dsonar.javabinaries=src -Dsonar.projectName=sonarkey -Dsonar.jacoco.reportsPath=target/jacoco.exec' 
-      //     sh '''${scannerHome}/bin/sonar-scanner -Dsonar.projectKey=hello_world_pipeline \
-      //     -Dsonar.projectName=sonarkey \
+      //     sh '''${scannerHome}/bin/sonar-scanner -Dsonar.projectKey=shweta\
+      //     -Dsonar.projectName=key \
       //     -Dsonar.projectVersion=1.0 \
       //     -Dsonar.sources=webapp/ \
       //     -Dsonar.java.binaries=target/test-classes/com/visualpathit/account/controllerTest/ \
