@@ -1,32 +1,32 @@
 pipeline {
    agent any
    tools{
-      jdk 'java11'
+      // jdk 'java11'
       maven 'maven3'
       // sonarqube scanner 'SonarQube-Scanner'
     }
-    environment {
-      // defining sonarqube enviroment
-      SONAR_SCANNER = 'SonarQube-Scanner'
-      SONAR_SERVER = 'sonarqube'
-        // This can be nexus3 or nexus2
-      NEXUS_VERSION = "nexus3"
-      //This can be http or https
-      NEXUS_PROTOCOL = "http"
-      //Where your nexus is running
-      NEXUS_URL = "192.168.80.26:8081"
-      //Repository where we will upload artifact
-      NEXUS_REPOSITORY = "Devopsproject"
-      //jenkins credential id to authenticate to Nexus OSS
-      NEXUS_CREDENTIAL_ID = "nexus_token"
-    }
-    stages {
-    //   stage('SCM') {
-    //     steps {
-    //       svn 'http://192.168.80.24/svn/devops_project/'
-    //       credentialsId: 'svn_key'
-    //     }
-    //   }
+    // environment {
+    //   // defining sonarqube enviroment
+    //   SONAR_SCANNER = 'SonarQube-Scanner'
+    //   SONAR_SERVER = 'sonarqube'
+    //     // This can be nexus3 or nexus2
+    //   NEXUS_VERSION = "nexus3"
+    //   //This can be http or https
+    //   NEXUS_PROTOCOL = "http"
+    //   //Where your nexus is running
+    //   NEXUS_URL = "192.168.80.26:8081"
+    //   //Repository where we will upload artifact
+    //   NEXUS_REPOSITORY = "Devopsproject"
+    //   //jenkins credential id to authenticate to Nexus OSS
+    //   NEXUS_CREDENTIAL_ID = "nexus_token"
+    // }
+    // stages {
+    // //   stage('SCM') {
+    // //     steps {
+    // //       svn 'http://192.168.80.24/svn/devops_project/'
+    // //       credentialsId: 'svn_key'
+    // //     }
+    // //   }
       stage ('Initialize') {
         steps {
           echo '============================== PATH INITIALIZED =============================='
@@ -39,7 +39,7 @@ pipeline {
       stage ('Check secrets') {
         steps {
           echo '================================ CHECK SECRET ================================='
-          sh 'trufflehog3 https://github.com/chaudharysurya14/CICD_Portfolio_maven_project.git -f json -o truffelhog_output.json || true'
+          sh 'trufflehog3 https://github.com/shwetarani620/Portfolio_Maven-project.git -f json -o truffelhog_output.json || true'
         }
        }
       stage ('Software Composition Analysis') {
@@ -114,50 +114,50 @@ pipeline {
           sh 'mvn clean install'
         }
       }
-      stage("publish to nexus") {
-        steps {
-          echo '============================== UPLOADING ARTIFACTS TO NEXUS =============================='
-          nexusArtifactUploader artifacts: [
-            [
-              artifactId: 'maven-project', 
-              classifier: '', 
-              file: 'webapp/target/webapp.war', 
-              type: 'war'
-            ]
-          ], 
-          credentialsId: 'nexuscredential', 
-          groupId: 'com.example.maven-project', 
-          nexusUrl: '192.168.80.26:8081', 
-          nexusVersion: 'nexus3', 
-          protocol: 'http', 
-          repository: 'Devopsproject', 
-          version: '1.0-SNAPSHOT'
-        }
-      }
-      stage ('Fetch Application server') {
-        steps {
-          echo '============================== FETCH APPLICATION SERVER =============================='
-          sshagent(['application_server']) {
-            sh 'scp -o StrictHostKeyChecking=no /var/lib/jenkins/workspace/hello_world_pipeline/webapp/target/webapp.war root@192.168.80.10:/opt/tomcat/webapps/'
-          }
-        }
-      }
-      stage ('Deploy on tomcat') {
-        steps {
-          echo '============================== DEPLOY ON TOMCAT =============================='
-          sshagent(['application_server']) {
-            // sh 'ssh -o  StrictHostKeyChecking=no root@192.168.80.10 "bash /opt/tomcat/bin/shutdown.sh"'
-            sh 'ssh -o  StrictHostKeyChecking=no root@192.168.80.10 "bash /opt/tomcat/bin/startup.sh"'
-          }
-        }
-      }
-      stage ('Dynamic analysis') {
-        steps {
-          echo '============================== RUNNING SOFTWARE TESTING  =============================='
-          sshagent(['application_server']) {
-            sh 'ssh -o  StrictHostKeyChecking=no root@192.168.80.10 "sudo docker run --rm -v /root:/zap/wrk/:rw -t owasp/zap2docker-stable zap-full-scan.py -t http://192.168.80.10:8080/webapp/ -x zap_report || true"'
-	        }
-        }
-      }
+      // stage("publish to nexus") {
+      //   steps {
+      //     echo '============================== UPLOADING ARTIFACTS TO NEXUS =============================='
+      //     nexusArtifactUploader artifacts: [
+      //       [
+      //         artifactId: 'maven-project', 
+      //         classifier: '', 
+      //         file: 'webapp/target/webapp.war', 
+      //         type: 'war'
+      //       ]
+      //     ], 
+      //     credentialsId: 'nexuscredential', 
+      //     groupId: 'com.example.maven-project', 
+      //     nexusUrl: '192.168.80.26:8081', 
+      //     nexusVersion: 'nexus3', 
+      //     protocol: 'http', 
+      //     repository: 'Devopsproject', 
+      //     version: '1.0-SNAPSHOT'
+      //   }
+      // }
+      // stage ('Fetch Application server') {
+      //   steps {
+      //     echo '============================== FETCH APPLICATION SERVER =============================='
+      //     sshagent(['application_server']) {
+      //       sh 'scp -o StrictHostKeyChecking=no /var/lib/jenkins/workspace/hello_world_pipeline/webapp/target/webapp.war root@192.168.80.10:/opt/tomcat/webapps/'
+      //     }
+      //   }
+      // }
+      // stage ('Deploy on tomcat') {
+      //   steps {
+      //     echo '============================== DEPLOY ON TOMCAT =============================='
+      //     sshagent(['application_server']) {
+      //       // sh 'ssh -o  StrictHostKeyChecking=no root@192.168.80.10 "bash /opt/tomcat/bin/shutdown.sh"'
+      //       sh 'ssh -o  StrictHostKeyChecking=no root@192.168.80.10 "bash /opt/tomcat/bin/startup.sh"'
+      //     }
+      //   }
+      // }
+      // stage ('Dynamic analysis') {
+      //   steps {
+      //     echo '============================== RUNNING SOFTWARE TESTING  =============================='
+      //     sshagent(['application_server']) {
+      //       sh 'ssh -o  StrictHostKeyChecking=no root@192.168.80.10 "sudo docker run --rm -v /root:/zap/wrk/:rw -t owasp/zap2docker-stable zap-full-scan.py -t http://192.168.80.10:8080/webapp/ -x zap_report || true"'
+	     //    }
+      //   }
+      // }
     }
 }
