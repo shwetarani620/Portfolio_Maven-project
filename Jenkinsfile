@@ -29,8 +29,8 @@ pipeline {
                  dependencyCheckPublisher pattern: 'dependency-check-report.xml'
              }
         }
-      
-        steps {
+        stage ('Static Analysis') {
+           steps {
 		 echo '============================== Static Analysis =============================='
           withSonarQubeEnv('sonar') {
           // sh 'mvn clean sonar:sonar -Dsonar.javabinaries=src -Dsonar.projectName=sonarkey -Dsonar.jacoco.reportsPath=target/jacoco.exec' 
@@ -44,7 +44,7 @@ pipeline {
           -Dsonar.java.checkstyle.reportPaths=target/checkstyle-result.xml'''
           }
         }
-      // }
+      }
  //  stage ('Static Analysis') {
  //            steps {
  //               withSonarQubeEnv('sonar') {
