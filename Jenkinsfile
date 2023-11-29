@@ -1,10 +1,10 @@
 pipeline {
    agent any
-   tools{
-      // jdk 'java11'
-      maven 'maven3'
-      // sonarqube scanner 'SonarQube-Scanner'
-    }
+   // tools{
+   //    // jdk 'java11'
+   //    maven 'maven3'
+   //    // sonarqube scanner 'SonarQube-Scanner'
+   //  }
     // environment {
     //   // defining sonarqube enviroment
     //   SONAR_SCANNER = 'SonarQube-Scanner'
