@@ -1,33 +1,11 @@
 pipeline {
    agent any
-   // tools{
-   //    // jdk 'java11'
-   //    maven 'maven3'
-   //    // sonarqube scanner 'SonarQube-Scanner'
-   //  }
-    // environment {
-    //   // defining sonarqube enviroment
-    //   SONAR_SCANNER = 'SonarQube-Scanner'
-    //   SONAR_SERVER = 'sonarqube'
-    //     // This can be nexus3 or nexus2
-    //   NEXUS_VERSION = "nexus3"
-    //   //This can be http or https
-    //   NEXUS_PROTOCOL = "http"
-    //   //Where your nexus is running
-    //   NEXUS_URL = "192.168.80.26:8081"
-    //   //Repository where we will upload artifact
-    //   NEXUS_REPOSITORY = "Devopsproject"
-    //   //jenkins credential id to authenticate to Nexus OSS
-    //   NEXUS_CREDENTIAL_ID = "nexus_token"
-    // }
-    // stages {
-    // //   stage('SCM') {
-    // //     steps {
-    // //       svn 'http://192.168.80.24/svn/devops_project/'
-    // //       credentialsId: 'svn_key'
-    // //     }
-    // //   }
-       stages {
+   tools{
+      // jdk 'java11'
+      maven 'maven3'
+      // sonarqube scanner 'SonarQube-Scanner'
+    }
+     stages {
     stage ('Initialize') {
       steps {
         sh '''
